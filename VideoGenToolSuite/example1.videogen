@@ -1,11 +1,11 @@
 @author "MIAGE 2 students"
 VideoGen {
 	
-	mandatory videoseq v1 "/Users/macher1/Documents/bref2.mov"
-	optional videoseq v2 "v2folder/v2.mp4"
+	mandatory videoseq v1 "C:/Users/Hugo Palla/Documents/Projets/TDM/Video_Of_People_Walking"
+	optional videoseq v2 "C:/Users/Hugo Palla/Documents/Projets/TDM/Pexels_Videos_5103"
 	alternatives v3 {
-		videoseq v31 "bla.mp4"
-		videoseq v32 "blabla.mp4"
+		videoseq v31 "C:/Users/Hugo Palla/Documents/Projets/TDM/Blurred_Bokeh_Video"
+		videoseq v32 "C:/Users/Hugo Palla/Documents/Projets/TDM/Bokeh_Video_Of_Leaves"
 	}
-	mandatory videoseq v4 "/Users/macher1/Documents/bref2.mov"
+	mandatory videoseq v4 "C:/Users/Hugo Palla/Documents/Projets/TDM/Hamster Eating"
 }
