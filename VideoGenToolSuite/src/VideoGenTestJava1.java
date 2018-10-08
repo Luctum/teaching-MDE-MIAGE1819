@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -53,10 +54,16 @@ public class VideoGenTestJava1 {
 			}
 		}
 		
-		PrintWriter writer = new PrintWriter("playlist.m3u", "UTF-8");
+		PrintWriter writer = new PrintWriter("C:/Users/romain/Documents/Travail/IDM/projet/playlist.m3u", "UTF-8");
 		writer.println(playlist);
 		writer.close();
-		
+		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"C:\\Users\\romain\\Documents\\Travail\\IDM\\projet\\playlist.m3u\"";
+		try {
+			Process p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
