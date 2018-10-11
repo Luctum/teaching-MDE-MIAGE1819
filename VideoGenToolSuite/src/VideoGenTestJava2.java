@@ -39,21 +39,35 @@ public class VideoGenTestJava2 {
 		ArrayList<ArrayList<Object>> t;
 		
 		for(Media media: medias) {
-			if (media instanceof VideoSeq) {
+			if(media instanceof Image) {
+				
+			} else if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
 				if (vseq instanceof MandatoryVideoSeq) {
+					//1scenario possible
 				} else if (vseq instanceof OptionalVideoSeq) {
 					int nombreAleatoire = rand.nextInt(2);
 					if(nombreAleatoire == 1) {
 						String location = ((OptionalVideoSeq) vseq).getDescription().getLocation();
 						playlist += location + "\n";
+						//2 scenario possible
 					}
 				} else if (vseq instanceof AlternativeVideoSeq) {
-					
+					//nbAlternative scenarios possibles
 				}
 			}
 		}
 	}
 	
+	public double getFileSize(String path){
+		File file =new File("c:\\java_xml_logo.jpg");
+		
+		if(file.exists()){
+			double bytes = file.length();
+			double kilobytes = (bytes / 1024);
+			return (kilobytes / 1024);
+		}
+		return 0;
+	}
 
 }
