@@ -36,31 +36,62 @@ public class VideoGenTestJava2 {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("ID");
-		ArrayList<ArrayList<Object>> t;
+		ArrayList<ArrayList<Object>> t = new ArrayList();
 		
 		for(Media media: medias) {
+			ArrayList<Object> etape = new ArrayList();
 			if(media instanceof Image) {
 				
 			} else if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
 				if (vseq instanceof MandatoryVideoSeq) {
-					//1scenario possible
+					String location = ((MandatoryVideoSeq) vseq).getDescription().getVideoid();
+					etape.add(location);
 				} else if (vseq instanceof OptionalVideoSeq) {
-					int nombreAleatoire = rand.nextInt(2);
-					if(nombreAleatoire == 1) {
-						String location = ((OptionalVideoSeq) vseq).getDescription().getLocation();
-						playlist += location + "\n";
-						//2 scenario possible
-					}
+					String location = ((OptionalVideoSeq) vseq).getDescription().getVideoid();
+					etape.add(location);
+					etape.add("");
 				} else if (vseq instanceof AlternativeVideoSeq) {
-					//nbAlternative scenarios possibles
+					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
+                    for (VideoDescription v : videodesc) {
+                    	etape.add(v.getVideoid());
+                    }
 				}
+				ArrayList<ArrayList<Object>> tmp = new ArrayList();
+				if(t.isEmpty()) {
+					for (Object j: etape) {
+						ArrayList<Object> list = new ArrayList();
+						list.add(j);
+						tmp.add(list);
+						System.out.println(list);
+					}					
+				}
+				else {
+					for (Object j: etape) {
+						for (ArrayList i: t) {
+							ArrayList i_tmp = (ArrayList) i.clone();
+							i_tmp.add(j);
+							tmp.add(i_tmp);
+						}					
+					}
+				}
+				t = (ArrayList<ArrayList<Object>>)tmp.clone();
 			}
+			
+		}
+		int cpt = 1;
+		for (ArrayList i: t) {
+			System.out.println("version" +cpt+ " : ");
+			for (Object s: i) {
+				System.out.print((String)s + " / ");			
+			}
+			cpt++;
+			System.out.println("");
 		}
 	}
 	
 	public double getFileSize(String path){
-		File file =new File("c:\\java_xml_logo.jpg");
+		File file =new File(path);
 		
 		if(file.exists()){
 			double bytes = file.length();
