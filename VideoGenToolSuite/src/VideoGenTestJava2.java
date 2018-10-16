@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -33,10 +34,8 @@ public class VideoGenTestJava2 {
 		Random rand = new Random();
 		String playlist = "";
 		EList<Media> medias = videoGen.getMedias();
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("ID");
 		ArrayList<ArrayList<Object>> t = new ArrayList();
+		ArrayList<VideoDescription> videoList = new ArrayList();
 		
 		for(Media media: medias) {
 			ArrayList<Object> etape = new ArrayList();
@@ -44,19 +43,24 @@ public class VideoGenTestJava2 {
 				
 			} else if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
+				
 				if (vseq instanceof MandatoryVideoSeq) {
-					String location = ((MandatoryVideoSeq) vseq).getDescription().getVideoid();
+					VideoDescription location = ((MandatoryVideoSeq) vseq).getDescription();
+					videoList.add(location);
 					etape.add(location);
 				} else if (vseq instanceof OptionalVideoSeq) {
-					String location = ((OptionalVideoSeq) vseq).getDescription().getVideoid();
+					VideoDescription location = ((OptionalVideoSeq) vseq).getDescription();
+					videoList.add(location);
 					etape.add(location);
 					etape.add("");
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
                     for (VideoDescription v : videodesc) {
                     	etape.add(v.getVideoid());
+                    	videoList.add(v);
                     }
 				}
+				
 				ArrayList<ArrayList<Object>> tmp = new ArrayList();
 				if(t.isEmpty()) {
 					for (Object j: etape) {
@@ -77,28 +81,51 @@ public class VideoGenTestJava2 {
 				}
 				t = (ArrayList<ArrayList<Object>>)tmp.clone();
 			}
-			
 		}
-		int cpt = 1;
-		for (ArrayList i: t) {
-			System.out.println("version" +cpt+ " : ");
-			for (Object s: i) {
-				System.out.print((String)s + " / ");			
-			}
-			cpt++;
-			System.out.println("");
-		}
+		
+		this.generateCSV(t, videoList);
+		
 	}
 	
 	public double getFileSize(String path){
 		File file =new File(path);
-		
 		if(file.exists()){
 			double bytes = file.length();
 			double kilobytes = (bytes / 1024);
 			return (kilobytes / 1024);
 		}
 		return 0;
+	}
+	
+	public void generateCSV(ArrayList<ArrayList<Object>> t, ArrayList<VideoDescription> videoList) throws FileNotFoundException, UnsupportedEncodingException {
+		StringBuilder builderCSV = new StringBuilder();
+		builderCSV.append("ID,");
+		for(Object video: videoList) {
+			builderCSV.append(((VideoDescription)video).getVideoid() + ",");
+		}
+		builderCSV.append("taille");
+		builderCSV.append("\n");
+		
+		int cpt = 1;
+		for (ArrayList i: t) {
+			builderCSV.append(cpt + ",");
+			int taille = 0;
+			for(VideoDescription video: videoList) {
+					if(i.contains(video)) {
+						taille += this.getFileSize(video.getLocation());
+						builderCSV.append("TRUE,");
+					} else {
+						builderCSV.append("FALSE,");
+					}
+			}
+			builderCSV.append(taille);
+			builderCSV.append("\n");
+			cpt++;
+		}
+		
+		PrintWriter writer = new PrintWriter("../../taille.csv", "UTF-8");
+		writer.println(builderCSV);
+		writer.close();
 	}
 
 }
