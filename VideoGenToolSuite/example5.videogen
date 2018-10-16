@@ -1,0 +1,4 @@
+@author "MIAGE 2 students"
+VideoGen {
+	mandatory videoseq v1 "Bokeh_Video_Of_Leaves.mp4"
+}

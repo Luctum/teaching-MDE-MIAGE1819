@@ -1,0 +1,22 @@
+@author "MIAGE 2 students"
+VideoGen {
+	alternatives v1 {
+		optional videoseq v11 "Video_Of_People_Walking.mp4"
+		optional videoseq v12 "Pexels_Videos_5103.mp4"
+		optional videoseq v13 "Hamster Eating.mp4"
+		optional videoseq v14 "Pexels_Videos_5103.mp4"
+	}
+	alternatives v2 {
+		optional videoseq v21 "Video_Of_People_Walking.mp4"
+		optional videoseq v22 "Pexels_Videos_5103.mp4"
+		optional videoseq v23 "Hamster Eating.mp4"
+		optional videoseq v24 "Pexels_Videos_5103.mp4"
+	}
+	alternatives v3 {
+		optional videoseq v31 "Video_Of_People_Walking.mp4"
+		optional videoseq v32 "Pexels_Videos_5103.mp4"
+		optional videoseq v33 "Hamster Eating.mp4"
+		optional videoseq v34 "Pexels_Videos_5103.mp4"
+	}
+	
+}

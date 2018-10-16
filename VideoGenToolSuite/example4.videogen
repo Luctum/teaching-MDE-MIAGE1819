@@ -1,0 +1,8 @@
+@author "MIAGE 2 students"
+VideoGen {
+	mandatory videoseq v1 "Video_Of_People_Walking.mp4"
+	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	mandatory videoseq v3 "Blurred_Bokeh_Video.mp4"
+	optional videoseq v4 "Bokeh_Video_Of_Leaves.mp4"
+	mandatory videoseq v5 "Video_Of_People_Walking.mp4"
+}

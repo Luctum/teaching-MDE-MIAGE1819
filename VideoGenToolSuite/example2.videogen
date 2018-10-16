@@ -6,5 +6,7 @@ VideoGen {
 		videoseq v31 "Blurred_Bokeh_Video.mp4"
 		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"
 	}
-	mandatory videoseq v4 "Hamster Eating.mp4"
+	mandatory videoseq v4 "Video_Of_People_Walking.mp4"
+	mandatory videoseq v5 "Hamster Eating.mp4"
+	mandatory videoseq v6 "Blurred_Bokeh_Video.mp4"
 }

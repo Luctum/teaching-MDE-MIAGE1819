@@ -1,0 +1,13 @@
+@author "MIAGE 2 students"
+VideoGen {
+	optional videoseq v1 "Pexels_Videos_5103.mp4"
+	alternatives v2 {
+		videoseq v21 "Blurred_Bokeh_Video.mp4"
+		videoseq v22 "Pexels_Videos_5103.mp4"
+	}
+	alternatives v3 {
+		videoseq v31 "Hamster Eating.mp4"
+		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"
+	}
+	mandatory videoseq v4 "Pexels_Videos_5103.mp4"
+}

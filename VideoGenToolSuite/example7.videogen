@@ -1,0 +1,8 @@
+@author "MIAGE 2 students"
+VideoGen {
+	optional videoseq v1 "Video_Of_People_Walking.mp4"
+	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	optional videoseq v3 "Hamster Eating.mp4"
+	optional videoseq v4 "Pexels_Videos_5103.mp4"
+	
+}

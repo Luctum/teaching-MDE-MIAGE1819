@@ -29,7 +29,164 @@ public class VideoGenTestJava3 {
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
 		assertNotNull(videoGen);		
 		System.out.println(videoGen.getInformation().getAuthorName());		
-		assertEquals(4, videoGen.getMedias().size());
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+	@Test
+	public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example2.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava3() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example3.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava4() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example4.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava5() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example5.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava6() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example6.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava7() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example7.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+	}
+	
+
+	@Test
+	public void testInJava8() throws FileNotFoundException, UnsupportedEncodingException {
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example8.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+
+	@Test
+	public void testInJava9() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example9.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
+		Random rand = new Random();
+		String playlist = "";
+		EList<Media> medias = videoGen.getMedias();
+		ArrayList<ArrayList<Object>> variante = this.generateVariante(medias);
+		System.out.println(variante);
+		int nbV = this.nbVariantes(medias);
+		System.out.println(nbV);
+		assertEquals(nbV, variante.size());
+		
+	}
+	
+	@Test
+	public void testInJava10() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example10.videogen"));
+		assertNotNull(videoGen);		
+		System.out.println(videoGen.getInformation().getAuthorName());		
 		Random rand = new Random();
 		String playlist = "";
 		EList<Media> medias = videoGen.getMedias();
