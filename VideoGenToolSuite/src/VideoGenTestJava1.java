@@ -1,6 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -24,6 +26,18 @@ public class VideoGenTestJava1 {
 	
 	@Test
 	public void testInJava1() throws FileNotFoundException, UnsupportedEncodingException {
+		String video_path = new String();
+		try {
+			String line;
+            FileReader fileReader = new FileReader("conf");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                video_path = line;
+            }   
+            bufferedReader.close();  
+        }
+        catch(IOException ex) { 
+        }
 		
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
 		assertNotNull(videoGen);		
@@ -38,18 +52,18 @@ public class VideoGenTestJava1 {
 			} else if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
 				if (vseq instanceof MandatoryVideoSeq) {
-					String location = ((MandatoryVideoSeq) vseq).getDescription().getLocation();
+					String location = video_path + ((MandatoryVideoSeq) vseq).getDescription().getLocation();
 					playlist += location + "\n"; 
 				} else if (vseq instanceof OptionalVideoSeq) {
 					int nombreAleatoire = rand.nextInt(2);
 					if(nombreAleatoire == 1) {
-						String location = ((OptionalVideoSeq) vseq).getDescription().getLocation();
+						String location = video_path + ((OptionalVideoSeq) vseq).getDescription().getLocation();
 						playlist += location + "\n"; 
 					}
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
 					int nombreAleatoire = rand.nextInt(videodesc.size());
-					playlist += videodesc.get(nombreAleatoire).getLocation() + "\n";
+					playlist += video_path + videodesc.get(nombreAleatoire).getLocation() + "\n";
 				}
 			}
 		}
