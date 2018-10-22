@@ -10,3 +10,4 @@ target/
 *.xtendbin
 org.eclipse.buildship.core.prefs
 /.DS_Store
+VideoGenToolSuite/conf
