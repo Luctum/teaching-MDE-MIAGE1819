@@ -68,10 +68,10 @@ public class VideoGenTestJava1 {
 			}
 		}
 		
-		PrintWriter writer = new PrintWriter("C:/Users/romain/Documents/Travail/IDM/projet/playlist.m3u", "UTF-8");
+		PrintWriter writer = new PrintWriter("..\\..\\videos\\playlist.m3u", "UTF-8");
 		writer.println(playlist);
 		writer.close();
-		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"C:\\Users\\romain\\Documents\\Travail\\IDM\\projet\\playlist.m3u\"";
+		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"..\\..\\videos\\playlist.m3u\"";
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {

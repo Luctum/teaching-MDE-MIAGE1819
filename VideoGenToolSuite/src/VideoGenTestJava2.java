@@ -1,7 +1,9 @@
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -98,6 +100,19 @@ public class VideoGenTestJava2 {
 	}
 	
 	public void generateCSV(ArrayList<ArrayList<Object>> t, ArrayList<VideoDescription> videoList) throws FileNotFoundException, UnsupportedEncodingException {
+		String video_path = new String();
+		try {
+			String line;
+            FileReader fileReader = new FileReader("conf");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                video_path = line;
+            }   
+            bufferedReader.close();  
+        }
+        catch(IOException ex) { 
+        }
+		
 		StringBuilder builderCSV = new StringBuilder();
 		builderCSV.append("ID,");
 		for(Object video: videoList) {
@@ -112,7 +127,7 @@ public class VideoGenTestJava2 {
 			int taille = 0;
 			for(VideoDescription video: videoList) {
 					if(i.contains(video)) {
-						taille += this.getFileSize(video.getLocation());
+						taille += this.getFileSize(video_path + video.getLocation());
 						builderCSV.append("TRUE,");
 					} else {
 						builderCSV.append("FALSE,");

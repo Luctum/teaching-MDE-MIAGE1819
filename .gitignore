@@ -11,3 +11,4 @@ target/
 org.eclipse.buildship.core.prefs
 /.DS_Store
 VideoGenToolSuite/conf
+.class

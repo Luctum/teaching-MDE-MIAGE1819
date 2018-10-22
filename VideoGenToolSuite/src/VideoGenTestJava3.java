@@ -1,13 +1,17 @@
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -23,11 +27,12 @@ import org.xtext.example.mydsl.videoGen.VideoSeq;
 
 public class VideoGenTestJava3 {
 	
+	String current = "";
+	
 	@Test
 	public void testInJava1() throws FileNotFoundException, UnsupportedEncodingException {
-		
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
-		assertNotNull(videoGen);		
+		assertNotNull(videoGen);	
 		System.out.println(videoGen.getInformation().getAuthorName());		
 		Random rand = new Random();
 		String playlist = "";
@@ -37,12 +42,11 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 	@Test
 	public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException {
-		
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example2.videogen"));
 		assertNotNull(videoGen);		
 		System.out.println(videoGen.getInformation().getAuthorName());		
@@ -54,7 +58,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -72,7 +76,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		//assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -90,7 +94,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -108,7 +112,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -126,7 +130,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -144,6 +148,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -160,7 +165,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 
@@ -178,12 +183,11 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 	@Test
 	public void testInJava10() throws FileNotFoundException, UnsupportedEncodingException {
-		
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example10.videogen"));
 		assertNotNull(videoGen);		
 		System.out.println(videoGen.getInformation().getAuthorName());		
@@ -195,7 +199,7 @@ public class VideoGenTestJava3 {
 		int nbV = this.nbVariantes(medias);
 		System.out.println(nbV);
 		assertEquals(nbV, variante.size());
-		
+		assertEquals(variante.size(), this.csvSize());
 	}
 	
 	public int nbVariantes(EList<Media> medias) {
@@ -217,10 +221,11 @@ public class VideoGenTestJava3 {
 		return res;
 	}
 	
-	public ArrayList<ArrayList<Object>> generateVariante(EList<Media> medias){
+	public ArrayList<ArrayList<Object>> generateVariante(EList<Media> medias) throws FileNotFoundException, UnsupportedEncodingException{
 		StringBuilder sb = new StringBuilder();
 		sb.append("ID");
 		ArrayList<ArrayList<Object>> t = new ArrayList();
+		ArrayList<VideoDescription> videoList = new ArrayList();
 		
 		for(Media media: medias) {
 			ArrayList<Object> etape = new ArrayList();
@@ -231,13 +236,16 @@ public class VideoGenTestJava3 {
 				if (vseq instanceof MandatoryVideoSeq) {
 					String location = ((MandatoryVideoSeq) vseq).getDescription().getVideoid();
 					etape.add(location);
+					videoList.add(((MandatoryVideoSeq) vseq).getDescription());
 				} else if (vseq instanceof OptionalVideoSeq) {
 					String location = ((OptionalVideoSeq) vseq).getDescription().getVideoid();
+					videoList.add(((OptionalVideoSeq) vseq).getDescription());
 					etape.add(location);
 					etape.add("");
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
                     for (VideoDescription v : videodesc) {
+                    	videoList.add(v);
                     	etape.add(v.getVideoid());
                     }
 				}
@@ -261,6 +269,8 @@ public class VideoGenTestJava3 {
 				t = (ArrayList<ArrayList<Object>>)tmp.clone();
 			}
 		}
+		
+		this.generateCSV(t, videoList);
 		return(t);
 	}
 	
@@ -274,5 +284,55 @@ public class VideoGenTestJava3 {
 		}
 		return 0;
 	}
+	
+	public void generateCSV(ArrayList<ArrayList<Object>> t, ArrayList<VideoDescription> videoList) throws FileNotFoundException, UnsupportedEncodingException {
+		String video_path = new String();
+		try {
+			String line;
+            FileReader fileReader = new FileReader("conf");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                video_path = line;
+            }   
+            bufferedReader.close();  
+        }
+        catch(IOException ex) { 
+        }
+		
+		StringBuilder builderCSV = new StringBuilder();
+		builderCSV.append("ID,");
+		for(Object video: videoList) {
+			builderCSV.append(((VideoDescription)video).getVideoid() + ",");
+		}
+		builderCSV.append("taille");
+		builderCSV.append("\n");
+		
+		int cpt = 1;
+		for (ArrayList i: t) {
+			builderCSV.append(cpt + ",");
+			int taille = 0;
+			for(VideoDescription video: videoList) {
+					if(i.contains(video)) {
+						taille += this.getFileSize(video_path + video.getLocation());
+						builderCSV.append("TRUE,");
+					} else {
+						builderCSV.append("FALSE,");
+					}
+			}
+			builderCSV.append(taille);
+			builderCSV.append("\n");
+			cpt++;
+		}
+		
+		PrintWriter writer = new PrintWriter("../../table.csv", "UTF-8");
+		writer.println(builderCSV);
+		writer.close();
+		this.current = builderCSV.toString();
+	}
 
+	public int csvSize() {
+        String[] table = this.current.split(Pattern.quote("\n"));
+        System.out.println(table.length-1);
+        return table.length-1;
+	}
 }
