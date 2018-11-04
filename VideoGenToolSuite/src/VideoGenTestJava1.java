@@ -26,64 +26,15 @@ public class VideoGenTestJava1 {
 	
 	@Test
 	public void testInJava1() throws FileNotFoundException, UnsupportedEncodingException {
-		String video_path = new String();
-		try {
-			String line;
-            FileReader fileReader = new FileReader("conf");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while((line = bufferedReader.readLine()) != null) {
-                video_path = line;
-            }   
-            bufferedReader.close();  
-        }
-        catch(IOException ex) { 
-        }
-		
-		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
-		assertNotNull(videoGen);		
-		System.out.println(videoGen.getInformation().getAuthorName());		
-		assertEquals(4, videoGen.getMedias().size());	
-		Random rand = new Random();
-		String playlist = "";
-		EList<Media> medias = videoGen.getMedias();
-		for(Media media: medias) {
-			if(media instanceof Image) {
-				
-			} else if (media instanceof VideoSeq) {
-				VideoSeq vseq = (VideoSeq) media;
-				if (vseq instanceof MandatoryVideoSeq) {
-					String location = video_path + ((MandatoryVideoSeq) vseq).getDescription().getLocation();
-					playlist += location + "\n"; 
-				} else if (vseq instanceof OptionalVideoSeq) {
-					int nombreAleatoire = rand.nextInt(2);
-					if(nombreAleatoire == 1) {
-						String location = video_path + ((OptionalVideoSeq) vseq).getDescription().getLocation();
-						playlist += location + "\n"; 
-					}
-				} else if (vseq instanceof AlternativeVideoSeq) {
-					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
-					int nombreAleatoire = rand.nextInt(videodesc.size());
-					playlist += video_path + videodesc.get(nombreAleatoire).getLocation() + "\n";
-				}
-			}
-		}
-		
-		PrintWriter writer = new PrintWriter("..\\..\\videos\\playlist.m3u", "UTF-8");
-		writer.println(playlist);
-		writer.close();
-		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"..\\..\\videos\\playlist.m3u\"";
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		VideoGenerator g = new VideoGenerator("example1.videogen");
+		g.generatePlaylistFile(g.generateVlcPlaylistString(g.generateVariation()), "m3u");
+		g.playPlaylistWithVlc();
 	}
 	
 	@Test
-public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException {
+	public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException {
 		
-		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
+		/*VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
 		assertNotNull(videoGen);		
 		System.out.println(videoGen.getInformation().getAuthorName());		
 		assertEquals(4, videoGen.getMedias().size());	
@@ -110,20 +61,14 @@ public void testInJava2() throws FileNotFoundException, UnsupportedEncodingExcep
 					playlist += "file" + " '" + videodesc.get(nombreAleatoire).getLocation() + "'" + "\n";
 				}
 			}
-		}
-		PrintWriter writer = new PrintWriter("C:/Users/romain/Documents/Travail/IDM/projet/playlist_ffmpeg.txt", "UTF-8");
-		writer.println(playlist);
-		writer.close();
-		String input = "C:\\Users\\romain\\Documents\\Travail\\IDM\\projet\\playlist_ffmpeg.txt";
-		String output = "C:\\Users\\romain\\Documents\\Travail\\IDM\\projet\\output.mp4";
-		String cmd = "ffmpeg -f concat -safe 0 -i " + input + " -c copy " + output;
-		System.out.println(cmd);
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}*/
+		
+		//Using VideoGenerator functions
+		VideoGenerator g = new VideoGenerator("example1.videogen");
+		g.generatePlaylistFile(g.generateFFmpegPlaylistString(g.generateVariation()), "txt");
+		g.generateFFmpegVideo();
+		g.generateFFmpegGif();
+		
 	}
 
 	
