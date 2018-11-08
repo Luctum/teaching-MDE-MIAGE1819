@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
@@ -20,6 +22,8 @@ import org.xtext.example.mydsl.videoGen.OptionalVideoSeq;
 import org.xtext.example.mydsl.videoGen.VideoDescription;
 import org.xtext.example.mydsl.videoGen.VideoGeneratorModel;
 import org.xtext.example.mydsl.videoGen.VideoSeq;
+import org.xtext.example.mydsl.videoGen.Text;
+import org.xtext.example.mydsl.videoGen.Filter;
 
 public class VideoGenerator {
 	
@@ -28,6 +32,15 @@ public class VideoGenerator {
 	private VideoGeneratorModel videoGen;
 	
 	private String videoPath;
+	
+	private final String CENTER = "(h-text_h)/2";
+	
+	private final String TOP = "(h-text_h)/10";
+
+	private final String BOTTOM = "(h-text_h)/1.1";
+
+	
+	
 	
 	
 	public VideoGenerator(String video) {
@@ -68,18 +81,33 @@ public class VideoGenerator {
 			} else if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
 				if (vseq instanceof MandatoryVideoSeq) {
-					String location = videoPath + ((MandatoryVideoSeq) vseq).getDescription().getLocation();
-					playlist.add(location); 
+					VideoDescription description = ((MandatoryVideoSeq) vseq).getDescription();
+					String location = description.getLocation();
+					Text text = description.getText();
+					if(text != null) {
+						location = this.addText(location, text);
+					}
+					playlist.add(videoPath + location); 
 				} else if (vseq instanceof OptionalVideoSeq) {
 					int nombreAleatoire = rand.nextInt(2);
 					if(nombreAleatoire == 1) {
-						String location = videoPath + ((OptionalVideoSeq) vseq).getDescription().getLocation();
-						playlist.add(location); 
+						VideoDescription description = ((OptionalVideoSeq) vseq).getDescription();
+						String location = description.getLocation();
+						Text text = description.getText();
+						if(text != null) {
+							location = this.addText(location, text);
+						}
+						playlist.add(videoPath + location);  
 					}
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
 					int nombreAleatoire = rand.nextInt(videodesc.size());
-					playlist.add(videoPath + videodesc.get(nombreAleatoire).getLocation());
+					String location = videodesc.get(nombreAleatoire).getLocation();
+					Text text = videodesc.get(nombreAleatoire).getText();
+					if(text != null) {
+						location = this.addText(location, text);
+					}
+					playlist.add(videoPath + location);
 				}
 			}
 		}
@@ -118,7 +146,7 @@ public class VideoGenerator {
 			Process p = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	/**
@@ -178,6 +206,59 @@ public class VideoGenerator {
 		PrintWriter writer = new PrintWriter(Paths.get(videoPath + "playlist." + extension).toString(), "UTF-8");
 		writer.println(playlist);
 		writer.close();
+	}
+	
+	/**
+	 * Add text on video
+	 * @param path path of the video
+	 * @param text Text object to add
+	 */
+	public String addText(String path, Text text) {
+		String input = videoPath + path;
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String content = text.getContent();
+		String textPosition = text.getPosition();
+		String position = "0";
+		if(textPosition.equals("CENTER")) {
+			position = this.CENTER;
+			System.out.println("coucou");
+		}
+		else if(textPosition == "BOTTOM") {
+			position = this.BOTTOM;
+		}
+		else if(textPosition == "TOP") {
+			position = this.TOP;
+		}
+		String color = "white";
+		if(text.getColor() != null) {
+			color = text.getColor();
+		}
+		String size = "40";
+		if(text.getSize() != null) {
+			size = text.getSize();
+		}
+		String cmd = "ffmpeg -y -i " + Paths.get(input).toString() + " -vf \"drawtext=text='" + content + "':fontcolor=" + color + ":fontsize=" + size + ":x=(w-text_w)/2:y=" + position + "\" " + videoPath + Paths.get(output).toString() + "";
+		System.out.println(cmd);
+		try
+        {            
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec(cmd);
+            InputStream stderr = proc.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stderr);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            System.out.println("<ERROR>");
+            while ( (line = br.readLine()) != null)
+                System.out.println(line);
+            System.out.println("</ERROR>");
+            int exitVal = proc.waitFor();
+            System.out.println("Process exitValue: " + exitVal);
+        } catch (Throwable t)
+          {
+            t.printStackTrace();
+          }
+		System.out.println("return");
+		return(output);
 	}
 }
 

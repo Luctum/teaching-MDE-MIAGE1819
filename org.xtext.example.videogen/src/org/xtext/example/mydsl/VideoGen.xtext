@@ -88,7 +88,7 @@ Text :
 	'content' content=STRING
 	'position' position=Position
 	('color' color=STRING)?
-	('size' size=INT)?
+	('size' size=STRING)?
 	RIGHT_BRACKET
 ;
 
@@ -116,5 +116,3 @@ terminal LEFT_BRACKET: '{' ;
 terminal RIGHT_BRACKET: '}';
 terminal PERCENTAGE returns ecore::EInt: ('1'..'9')('0'..'9')? | '100';
 terminal FLOAT returns ecore::EFloat: INT'.'INT;
-
-
