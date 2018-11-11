@@ -1,10 +1,10 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "Video_Of_People_Walking.mp4"
-	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	mandatory videoseq v1 "Video_Of_People_Walking.mkv"
+	optional videoseq v2 "Pexels_Videos_5103.mkv"
 	alternatives v3 {
-		videoseq v31 "Blurred_Bokeh_Video.mp4"
-		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"
+		videoseq v31 "Blurred_Bokeh_Video.mkv"
+		videoseq v32 "Bokeh_Video_Of_Leaves.mkv"
 	}
-	mandatory videoseq v4 "Hamster Eating.mp4"
+	mandatory videoseq v4 "Hamster_Eating.mkv"
 }

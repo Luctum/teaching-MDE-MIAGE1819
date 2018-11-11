@@ -38,10 +38,6 @@ public class VideoGenerator {
 	private final String TOP = "(h-text_h)/10";
 
 	private final String BOTTOM = "(h-text_h)/1.1";
-
-	
-	
-	
 	
 	public VideoGenerator(String video) {
 		this.videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI(video));
@@ -123,13 +119,8 @@ public class VideoGenerator {
 	public void generateFFmpegVideo() throws FileNotFoundException, UnsupportedEncodingException {
 		String input = videoPath + "playlist.txt";
 		String output = videoPath + "output.mp4";
-		String cmd = "ffmpeg -f concat -safe 0 -i \"" + Paths.get(input).toString() + "\" -c copy -y \"" + Paths.get(output).toString()+"\"";
-		System.out.println(cmd);
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String cmd = "ffmpeg -f concat -safe 0 -i \"" + Paths.get(input).toString() + "\" -fflags +genpts -c copy -y \"" + Paths.get(output).toString()+"\"";
+		this.execCmd(cmd);
 	}
 	
 	/**
@@ -142,16 +133,10 @@ public class VideoGenerator {
 		String input = videoPath + "output.mp4";
 		String output = videoPath + "output.gif";
 		String outputPalette = videoPath+ "palette.png";
-		String cmdPalette = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf fps=15,scale=320:-1:flags=lanczos,palettegen \"" + Paths.get(outputPalette).toString() + "\"";
-		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -i \"" +  Paths.get(outputPalette).toString() + "\" -filter_complex paletteuse -r 10 -s 320x480 \"" + Paths.get(output).toString()+"\"";
-		System.out.println(cmd);
-		System.out.println(cmdPalette);
-		try {
-			Process p = Runtime.getRuntime().exec(cmdPalette);
-			Process p2 = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
+		String cmdPalette = "ffmpeg -t 3 -ss 2.6 -y -i \"" + Paths.get(input).toString() + "\" -vf fps=15,scale=320:-1:flags=lanczos,palettegen \"" + Paths.get(outputPalette).toString() + "\"";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -i \"" +  Paths.get(outputPalette).toString() + "\" -filter_complex \"fps=15,scale=400:-1:flags=lanczos[x];[x][1:v]paletteuse\" \"" + Paths.get(output).toString()+"\"";
+		this.execCmd(cmdPalette);
+		this.execCmd(cmd);
 	}
 	
 	/**
@@ -163,12 +148,7 @@ public class VideoGenerator {
 	public void playPlaylistWithVlc() throws FileNotFoundException, UnsupportedEncodingException {
 		//TODO rewrite that to work with linux/macOS
 		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"..\\..\\videos\\playlist.m3u\"";
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.execCmd(cmd);
 	}
 	
 	/**
@@ -220,7 +200,7 @@ public class VideoGenerator {
 	 */
 	public String addText(String path, Text text) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String output = path.substring(0, path.lastIndexOf('.')) +"Texted.mp4";
 		String content = text.getContent();
 		String textPosition = text.getPosition();
 		String position = "0";
@@ -243,6 +223,15 @@ public class VideoGenerator {
 			size = text.getSize();
 		}
 		String cmd = "ffmpeg -y -i " + Paths.get(input).toString() + " -vf \"drawtext=text='" + content + "':fontcolor=" + color + ":fontsize=" + size + ":x=(w-text_w)/2:y=" + position + "\" " + videoPath + Paths.get(output).toString() + "";
+		this.execCmd(cmd);
+		return(output);
+	}
+	
+	/**
+	 * Execute a command line process and wait for it to end
+	 * @param cmd
+	 */
+	public void execCmd(String cmd) {
 		System.out.println(cmd);
 		try
         {            
@@ -252,18 +241,14 @@ public class VideoGenerator {
             InputStreamReader isr = new InputStreamReader(stderr);
             BufferedReader br = new BufferedReader(isr);
             String line = null;
-            System.out.println("<ERROR>");
             while ( (line = br.readLine()) != null)
                 System.out.println(line);
-            System.out.println("</ERROR>");
             int exitVal = proc.waitFor();
             System.out.println("Process exitValue: " + exitVal);
         } catch (Throwable t)
           {
             t.printStackTrace();
           }
-		System.out.println("return");
-		return(output);
 	}
 }
 
