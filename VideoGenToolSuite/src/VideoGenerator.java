@@ -133,8 +133,8 @@ public class VideoGenerator {
 		String input = videoPath + "output.mp4";
 		String output = videoPath + "output.gif";
 		String outputPalette = videoPath+ "palette.png";
-		String cmdPalette = "ffmpeg -t 3 -ss 2.6 -y -i \"" + Paths.get(input).toString() + "\" -vf fps=15,scale=320:-1:flags=lanczos,palettegen \"" + Paths.get(outputPalette).toString() + "\"";
-		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -i \"" +  Paths.get(outputPalette).toString() + "\" -filter_complex \"fps=15,scale=400:-1:flags=lanczos[x];[x][1:v]paletteuse\" \"" + Paths.get(output).toString()+"\"";
+		String cmdPalette = "ffmpeg -t 3 -ss 2.6 -y -i \"" + Paths.get(input).toString() + "\" -vf fps=10,scale=480:-1:flags=lanczos,palettegen \"" + Paths.get(outputPalette).toString() + "\"";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -i \"" +  Paths.get(outputPalette).toString() + "\" -filter_complex \"fps=10,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse\" \"" + Paths.get(output).toString()+"\"";
 		this.execCmd(cmdPalette);
 		this.execCmd(cmd);
 	}
