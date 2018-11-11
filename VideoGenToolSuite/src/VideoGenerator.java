@@ -136,14 +136,19 @@ public class VideoGenerator {
 	 * Generate a gif with ffmpeg
 	 * @throws FileNotFoundException
 	 * @throws UnsupportedEncodingException
+	 * @throws InterruptedException 
 	 */
-	public void generateFFmpegGif() throws FileNotFoundException, UnsupportedEncodingException {
-		String input = videoPath + "playlist.txt";
+	public void generateFFmpegGif() throws FileNotFoundException, UnsupportedEncodingException, InterruptedException {
+		String input = videoPath + "output.mp4";
 		String output = videoPath + "output.gif";
-		String cmd = "ffmpeg -f concat -safe 0 -i \"" + Paths.get(input).toString() + "\" -c copy -y \"" + Paths.get(output).toString()+"\"";
+		String outputPalette = videoPath+ "palette.png";
+		String cmdPalette = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf fps=15,scale=320:-1:flags=lanczos,palettegen \"" + Paths.get(outputPalette).toString() + "\"";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -i \"" +  Paths.get(outputPalette).toString() + "\" -filter_complex paletteuse -r 10 -s 320x480 \"" + Paths.get(output).toString()+"\"";
 		System.out.println(cmd);
+		System.out.println(cmdPalette);
 		try {
-			Process p = Runtime.getRuntime().exec(cmd);
+			Process p = Runtime.getRuntime().exec(cmdPalette);
+			Process p2 = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

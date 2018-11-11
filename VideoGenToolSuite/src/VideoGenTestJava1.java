@@ -32,7 +32,7 @@ public class VideoGenTestJava1 {
 	}
 	
 	@Test
-	public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException {
+	public void testInJava2() throws FileNotFoundException, UnsupportedEncodingException, InterruptedException {
 		
 		/*VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
 		assertNotNull(videoGen);		
