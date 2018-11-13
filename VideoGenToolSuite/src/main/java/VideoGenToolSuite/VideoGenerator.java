@@ -1,3 +1,5 @@
+package main.java.VideoGenToolSuite;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,6 +24,9 @@ import org.xtext.example.mydsl.videoGen.OptionalVideoSeq;
 import org.xtext.example.mydsl.videoGen.VideoDescription;
 import org.xtext.example.mydsl.videoGen.VideoGeneratorModel;
 import org.xtext.example.mydsl.videoGen.VideoSeq;
+
+import m2miage.VideoGenHelper;
+
 import org.xtext.example.mydsl.videoGen.Text;
 import org.xtext.example.mydsl.videoGen.Filter;
 

@@ -1,26 +1,11 @@
-import static org.junit.Assert.*;
+package test.java.VideoGenToolSuite;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.junit.Test;
-import org.xtext.example.mydsl.videoGen.AlternativeVideoSeq;
-import org.xtext.example.mydsl.videoGen.Image;
-import org.xtext.example.mydsl.videoGen.MandatoryVideoSeq;
-import org.xtext.example.mydsl.videoGen.Media;
-import org.xtext.example.mydsl.videoGen.OptionalVideoSeq;
-import org.xtext.example.mydsl.videoGen.VideoDescription;
-import org.xtext.example.mydsl.videoGen.VideoGeneratorModel;
-import org.xtext.example.mydsl.videoGen.VideoSeq;
+
+import main.java.VideoGenToolSuite.VideoGenerator;
 
 public class VideoGenTestJava1 {
 	

@@ -1,3 +1,5 @@
+package test.java.VideoGenToolSuite;
+
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
@@ -23,6 +25,8 @@ import org.xtext.example.mydsl.videoGen.OptionalVideoSeq;
 import org.xtext.example.mydsl.videoGen.VideoDescription;
 import org.xtext.example.mydsl.videoGen.VideoGeneratorModel;
 import org.xtext.example.mydsl.videoGen.VideoSeq;
+
+import m2miage.VideoGenHelper;
 
 public class VideoGenTestJava2 {
 	
