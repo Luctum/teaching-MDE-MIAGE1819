@@ -1,6 +1,7 @@
 slides-pptx/
 /.m2/
 build/
+VideoGenToolSuite/bin/
 !**/src/**/build
 !**/xtend-gen/**/build
 bin/
@@ -12,3 +13,7 @@ org.eclipse.buildship.core.prefs
 /.DS_Store
 VideoGenToolSuite/conf
 .class
+.settings/
+.project/
+.idea/
+\.project
