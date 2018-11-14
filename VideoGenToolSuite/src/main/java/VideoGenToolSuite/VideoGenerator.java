@@ -239,7 +239,7 @@ public class VideoGenerator {
 	public void execCmd(String cmd) {
 		System.out.println(cmd);
 		try
-        {            
+        {
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd);
             InputStream stderr = proc.getErrorStream();
@@ -254,6 +254,11 @@ public class VideoGenerator {
           {
             t.printStackTrace();
           }
+	}
+	
+	public String getGeneratedVideoPath(){
+		return this.videoPath + "output.mp4";
+		
 	}
 }
 
