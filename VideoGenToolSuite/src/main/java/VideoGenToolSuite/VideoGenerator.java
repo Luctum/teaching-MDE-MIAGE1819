@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -115,6 +116,49 @@ public class VideoGenerator {
 		return(playlist);
 	}
 	
+	/**
+	 * 
+	 * @return every video in the videogen file
+	 */
+	public ArrayList<HashMap<String, Object>> getAllVideoGenVideos() {
+		ArrayList<HashMap<String, Object>> videoList = new ArrayList();		
+		EList<Media> medias = videoGen.getMedias();
+		
+		for(Media media: medias) {
+			if (media instanceof VideoSeq) {
+				VideoSeq vseq = (VideoSeq) media;
+				if (vseq instanceof MandatoryVideoSeq) {
+					VideoDescription description = ((MandatoryVideoSeq) vseq).getDescription();
+					HashMap<String, Object> m = new HashMap();
+					m.put("id", description.getVideoid());
+					m.put("type", "mandatory");
+					m.put("location", description.getLocation());
+					videoList.add(m);
+				} else if (vseq instanceof OptionalVideoSeq) {
+					VideoDescription description = ((OptionalVideoSeq) vseq).getDescription();
+					String location = description.getLocation();
+					HashMap<String, Object> m = new HashMap();
+					m.put("id", description.getVideoid());
+					m.put("type", "optional");
+					m.put("location", description.getLocation());
+					videoList.add(m);
+				} else if (vseq instanceof AlternativeVideoSeq) {
+					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
+					HashMap<String, String> videos = new HashMap();
+					for(VideoDescription v: videodesc) {
+						videos.put("id",((VideoDescription) videodesc).getVideoid());
+						videos.put("location",((VideoDescription) videodesc).getLocation());
+					}
+					HashMap<String, Object> m = new HashMap();
+					m.put("id", ((AlternativeVideoSeq) vseq).getVideoid());
+					m.put("type", "alternative");
+					m.put("videos", videos);
+					videoList.add(m);
+				}
+			}
+		}
+		return(videoList);
+	}
 	
 	/**
 	 * Generate a video with FFmpeg
@@ -258,7 +302,10 @@ public class VideoGenerator {
 	
 	public String getGeneratedVideoPath(){
 		return this.videoPath + "output.mp4";
-		
+	}
+	
+	public String getGeneratedGifPath(){
+		return this.videoPath + "output.gif";
 	}
 }
 
