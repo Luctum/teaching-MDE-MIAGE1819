@@ -1,10 +1,49 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "Video_Of_People_Walking.mp4"
-	optional videoseq v2 "Pexels_Videos_5103.mp4"
-	alternatives v3 {
-		videoseq v31 "Blurred_Bokeh_Video.mp4"
-		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"
+	mandatory videoseq v1 "Video_Of_People_Walking.mp4" {
+	    filter b&w
+		text {
+			content "gens qui marchent"
+			position BOTTOM
+			color "black"
+			size '50'
+		}
 	}
-	mandatory videoseq v4 "Hamster Eating.mp4"
+	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	{
+	    filter negate
+		text {
+			content "COUCOU !"
+			position CENTER
+			color "yellow"
+			size '100'
+		}
+	}
+	alternatives v3 {
+		videoseq v31 "Blurred_Bokeh_Video.mp4"{
+			text {
+				content "rouge"
+				position TOP
+				color "red"
+				size '80'
+			}
+		}
+		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"{
+			text {
+				content "petit"
+				position TOP
+				color "blue"
+				size '20'
+			}
+		}
+	}
+	mandatory videoseq v4 "Hamster_Eating.mp4"{
+	        filter flip h
+			text {
+				content "HAMTARO PUTAIN !!!!"
+				position CENTER
+				color "white"
+				size '200'
+			}
+		}
 }
