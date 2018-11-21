@@ -18,7 +18,6 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
-
   <dependencies>
  	<dependency>
 	   <groupId>com.sparkjava</groupId>
@@ -36,29 +35,28 @@
 	  <artifactId>org.eclipse.xtend.lib</artifactId>
 	  <version>2.15.0</version>
 	</dependency>
+	 <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.7.5</version>
+   </dependency>
+   <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-log4j12</artifactId>
+       <version>1.7.5</version>
+   </dependency>
+	<dependency>
+	  <groupId>com.google.code.gson</groupId>
+	  <artifactId>gson</artifactId>
+	  <version>2.8.5</version>
+	</dependency>
   </dependencies>
+  
 
   <build>
   	<sourceDirectory>${src.dir}</sourceDirectory>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
-      	<plugin>
-		  <groupId>org.eclipse.xtend</groupId>
-		  <artifactId>xtend-maven-plugin</artifactId>
-		  <version>2.15.0</version>
-		  <executions>
-		    <execution>
-		      <goals>
-		        <goal>compile</goal>
-		        <goal>testCompile</goal>
-		      </goals>
-		      <configuration>
-		        <outputDirectory>${project.build.directory}/xtend-gen/main</outputDirectory>
-		        <testOutputDirectory>${project.build.directory}/xtend-gen/test</testOutputDirectory>
-		      </configuration>
-		    </execution>
-		  </executions>
-		</plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.0.0</version>

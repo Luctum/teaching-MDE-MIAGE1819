@@ -9,5 +9,5 @@ export default {
 
 
 <template>
- <div>VideoChoice</div>
+ <div>{{msg}}</div>
 </template>
