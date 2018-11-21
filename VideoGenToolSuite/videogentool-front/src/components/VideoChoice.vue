@@ -9,5 +9,5 @@ export default {
 
 
 <template>
- <div></div>
+ <div>VideoChoice</div>
 </template>

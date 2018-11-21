@@ -13,7 +13,7 @@ export default {
 
 <template>
   <div id="app" class="content">
-    <Result/>
+    <router-view/>
   </div>
 </template>
 
