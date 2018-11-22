@@ -5,8 +5,12 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
 
 public class App 
 {
@@ -16,10 +20,9 @@ public class App
 		
 		VideoGenerator g = new VideoGenerator("example1.videogen");
 		get("/video/all", (request, response) -> {
-			//Génère la liste des vignettes (before ?)
-		    //Récupère la liste des vidéos, leur type et leur image
-			g.generateVariation();
-			return 200;
+			HttpServletResponse resp = response.raw();
+			resp.setContentType("application/json");
+			return new Gson().toJson(g.getAllVideoGenVideos()) ;
 		});
 		get("/video/generate", (request, response) -> {
 		    //genère et stream la vidéo

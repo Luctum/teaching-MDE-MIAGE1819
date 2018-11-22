@@ -1,41 +1,37 @@
 <script>
 import axios from "axios";
-import Base64Img from "../components/Base64Img"
+import VideoList from "../components/VideoList";
 
 export default {
   name: "VideoGen",
   components: {
-    Base64Img,
+    VideoList
   },
   data() {
-    return{
-      allVideos: ''
-    }
-    
-  },
-  props: {
+    return {
+      allVideos: ""
+    };
   },
   created() {
-    axios({method: 'GET', url: 'http://localhost:4567/video/all', responseType:'application/json'}).then((response) => {
-        this.allVideos = response.data;
-    })
+    axios({ method: 'GET', url: 'http://localhost:4567/video/all', responseType:'application/json' }).then((response) => {
+      this.allVideos = response.data;
+    });
+  },
+  methods: {
+    getAllVideos() {
+      return this.allVideos;
+    }
   }
 };
 </script>
 
 <template>
-  <div>
-    <ul>
-      <li v-for="video in allVideos" :key="video.id">
-        {{video.id}} {{video.name}} {{video.type}}
-        <Base64Img v-if="!video.videos" :image="video.image" />
-        <ul v-if="video.videos">
-          <li  v-for="alternative in video.videos" :key="alternative.id">
-            {{alternative.id}} {{alternative.name}} {{alternative.type}}
-            <Base64Img :image="alternative.image" />
-          </li>
-        </ul>
-      </li>
-    </ul>
+  <div class="container">
+    <h1 class="has-text-centered">Choix de vidéo</h1>
+    <p class="has-text-centered">Choisissez les éléments permettant de constituer votre vidéo personnalisée</p>
+    <form>
+      <VideoList v-for="video in allVideos" :key="video.id" :video="video" />
+      <button class="button is-link">Generer</button>
+    </form>
   </div>
 </template>

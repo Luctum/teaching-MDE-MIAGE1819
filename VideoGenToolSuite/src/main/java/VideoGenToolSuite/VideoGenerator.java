@@ -1,6 +1,8 @@
 package main.java.VideoGenToolSuite;
 
+import java.util.Base64;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -65,7 +68,7 @@ public class VideoGenerator {
         }
 		return video_path;
 	}
-
+	
 	/**
 	 * Generate videovariante playlist 
 	 * @return ArrayList which contain video path
@@ -116,14 +119,18 @@ public class VideoGenerator {
 		return(playlist);
 	}
 	
+	
+	private void generatePngImage(String location, String locationOut) {
+		this.execCmd("ffmpeg -y -i "+ location + " -vf scale=200x150 -r 1 -t 00:00:01 -ss 00:00:02  -f image2 " + locationOut + ".jpg");
+	}
+	
 	/**
 	 * 
-	 * @return every video in the videogen file
+	 * @return every video in the videogen file and their images in a base64 string format
 	 */
 	public ArrayList<HashMap<String, Object>> getAllVideoGenVideos() {
 		ArrayList<HashMap<String, Object>> videoList = new ArrayList();		
 		EList<Media> medias = videoGen.getMedias();
-		
 		for(Media media: medias) {
 			if (media instanceof VideoSeq) {
 				VideoSeq vseq = (VideoSeq) media;
@@ -133,6 +140,14 @@ public class VideoGenerator {
 					m.put("id", description.getVideoid());
 					m.put("type", "mandatory");
 					m.put("location", description.getLocation());
+					this.generatePngImage(this.videoPath + description.getLocation(), this.videoPath + description.getLocation());
+					try {
+						File file =new File(this.videoPath + description.getLocation()+ ".jpg");
+						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					videoList.add(m);
 				} else if (vseq instanceof OptionalVideoSeq) {
 					VideoDescription description = ((OptionalVideoSeq) vseq).getDescription();
@@ -141,13 +156,32 @@ public class VideoGenerator {
 					m.put("id", description.getVideoid());
 					m.put("type", "optional");
 					m.put("location", description.getLocation());
+					this.generatePngImage(this.videoPath + description.getLocation(), this.videoPath + description.getLocation());
+					try {
+						File file =new File(this.videoPath + description.getLocation()+ ".jpg");
+						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					videoList.add(m);
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
-					HashMap<String, String> videos = new HashMap();
+					ArrayList<HashMap<String, Object>> videos = new ArrayList();
 					for(VideoDescription v: videodesc) {
-						videos.put("id",((VideoDescription) videodesc).getVideoid());
-						videos.put("location",((VideoDescription) videodesc).getLocation());
+						HashMap<String, Object> video = new HashMap();
+						video.put("id", v.getVideoid());
+						video.put("location", v.getLocation());
+						video.put("parentId", ((AlternativeVideoSeq) vseq).getVideoid());
+						this.generatePngImage(this.videoPath + v.getLocation(), this.videoPath + v.getLocation());
+						try {
+							File file =new File(this.videoPath + v.getLocation()+ ".jpg");
+							video.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						videos.add(video);
 					}
 					HashMap<String, Object> m = new HashMap();
 					m.put("id", ((AlternativeVideoSeq) vseq).getVideoid());

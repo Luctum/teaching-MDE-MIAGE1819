@@ -14,5 +14,7 @@ export default {
 
 
 <template>
- <img :src="convertedImg" />
+  <figure>
+    <img :src="convertedImg" />
+  </figure>
 </template>
