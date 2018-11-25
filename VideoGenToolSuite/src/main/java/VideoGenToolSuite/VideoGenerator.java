@@ -182,29 +182,71 @@ public class VideoGenerator {
 				VideoSeq vseq = (VideoSeq) media;
 				if (vseq instanceof MandatoryVideoSeq) {
 					VideoDescription description = ((MandatoryVideoSeq) vseq).getDescription();
+					String location = description.getLocation();
+					//Filter and change file location
+					Text text = description.getText();
+					if(text != null) {
+						location = this.addText(location, text);
+					}
+					Filter filter = description.getFilter();
+					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+						location = this.negateFilter(location);	
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+						location = this.blackAndWhiteFilter(location);
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+						if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+							location = this.horizontalFilter(location);
+						}
+						else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+							location = this.verticalFilter(location);
+						}
+					}
+					//generate list of attributes
 					HashMap<String, Object> m = new HashMap();
 					m.put("id", description.getVideoid());
 					m.put("type", "mandatory");
-					m.put("location", description.getLocation());
-					this.generatePngImage(this.videoPath + description.getLocation(), this.videoPath + description.getLocation());
+					m.put("location", location);
+					this.generatePngImage(this.videoPath + location, this.videoPath + location);
 					try {
-						File file =new File(this.videoPath + description.getLocation()+ ".jpg");
+						File file = new File(this.videoPath + location + ".jpg");
 						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
 					videoList.add(m);
 				} else if (vseq instanceof OptionalVideoSeq) {
 					VideoDescription description = ((OptionalVideoSeq) vseq).getDescription();
 					String location = description.getLocation();
+					Text text = description.getText();
+					if(text != null) {
+						//location = this.addText(location, text);
+					}
+					Filter filter = description.getFilter();
+					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+						location = this.negateFilter(location);	
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+						location = this.blackAndWhiteFilter(location);
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+						if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+							location = this.horizontalFilter(location);
+						}
+						else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+							location = this.verticalFilter(location);
+						}
+					}
 					HashMap<String, Object> m = new HashMap();
 					m.put("id", description.getVideoid());
 					m.put("type", "optional");
-					m.put("location", description.getLocation());
-					this.generatePngImage(this.videoPath + description.getLocation(), this.videoPath + description.getLocation());
+					m.put("location", location);
+					this.generatePngImage(this.videoPath + location, this.videoPath + location);
 					try {
-						File file =new File(this.videoPath + description.getLocation()+ ".jpg");
+						File file =new File(this.videoPath + location + ".jpg");
 						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -216,12 +258,32 @@ public class VideoGenerator {
 					ArrayList<HashMap<String, Object>> videos = new ArrayList();
 					for(VideoDescription v: videodesc) {
 						HashMap<String, Object> video = new HashMap();
+						String location = v.getLocation();
+						Text text = v.getText();
+						if(text != null) {
+							location = this.addText(location, text);
+						}
+						Filter filter = v.getFilter();
+						if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+							location = this.negateFilter(location);	
+						}
+						else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+							location = this.blackAndWhiteFilter(location);
+						}
+						else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+							if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+								location = this.horizontalFilter(location);
+							}
+							else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+								location = this.verticalFilter(location);
+							}
+						}
 						video.put("id", v.getVideoid());
-						video.put("location", v.getLocation());
+						video.put("location", location);
 						video.put("parentId", ((AlternativeVideoSeq) vseq).getVideoid());
-						this.generatePngImage(this.videoPath + v.getLocation(), this.videoPath + v.getLocation());
+						this.generatePngImage(this.videoPath + location, this.videoPath + location);
 						try {
-							File file =new File(this.videoPath + v.getLocation()+ ".jpg");
+							File file =new File(this.videoPath + location+ ".jpg");
 							video.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -329,13 +391,12 @@ public class VideoGenerator {
 	 */
 	public String addText(String path, Text text) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Texted.mp4";
+		String output = path.substring(0, path.lastIndexOf('.')) +"Texted.mkv";
 		String content = text.getContent();
 		String textPosition = text.getPosition();
 		String position = "0";
 		if(textPosition.equals("CENTER")) {
 			position = this.CENTER;
-			System.out.println("coucou");
 		}
 		else if(textPosition == "BOTTOM") {
 			position = this.BOTTOM;
@@ -359,32 +420,32 @@ public class VideoGenerator {
 
 	public String blackAndWhiteFilter(String path) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
-		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf hue=s=0 -c:a copy " + videoPath + Paths.get(output).toString();
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mkv";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf hue=s=0 \"" + videoPath + Paths.get(output).toString() + "\"";
 		this.execCmd(cmd);
 		return(output);
 	}
 	
 	public String negateFilter(String path) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
-		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf negate " + videoPath + Paths.get(output).toString();
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mkv";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf negate \"" + videoPath + Paths.get(output).toString() + "\"";
 		this.execCmd(cmd);
 		return(output);
 	}
 	
 	public String horizontalFilter(String path) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
-		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf hflip -c:a copy " + videoPath + Paths.get(output).toString();
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mkv";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf hflip \"" + videoPath + Paths.get(output).toString() + "\"";
 		this.execCmd(cmd);
 		return(output);
 	}
 	
 	public String verticalFilter(String path) {
 		String input = videoPath + path;
-		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
-		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf vflip -c:a copy " + videoPath + Paths.get(output).toString();
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mkv";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf vflip \"" + videoPath + Paths.get(output).toString() + "\"";
 		this.execCmd(cmd);
 		return(output);
 	}

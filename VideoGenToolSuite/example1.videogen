@@ -1,12 +1,12 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "Video_Of_People_Walking.mkv" {
+	mandatory videoseq v1 "meme_wow.mkv" {
 	    filter b&w
 		text {
-			content "gens qui marchent"
-			position BOTTOM
+			content "CA SWAG DUR ICI"
+			position CENTER
 			color "black"
-			size '50'
+			size '200'
 		}
 	}
 	optional videoseq v2 "Pexels_Videos_5103.mkv"
@@ -29,21 +29,15 @@ VideoGen {
 			}
 		}
 		videoseq v32 "Bokeh_Video_Of_Leaves.mkv"{
+			filter hflip
 			text {
-				content "petit"
+				content "SWAG"
 				position TOP
-				color "blue"
-				size '20'
-			}
-		}
-	}
-	mandatory videoseq v4 "Hamster_Eating.mkv"{
-	        filter flip h
-			text {
-				content "HAMTARO PUTAIN !!!!"
-				position CENTER
 				color "white"
-				size '200'
+				size '300'
 			}
 		}
+		videoseq v33 "Pexels_Videos_5103.mkv"
+	}
+	mandatory videoseq v4 "Hamster_Eating.mkv"
 }

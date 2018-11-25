@@ -11,22 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-
 public class App 
 {
 	
 	public static void main(String[] args) {
 		allowCors();
-		
 		VideoGenerator g = new VideoGenerator("example1.videogen");
+		
+		/*Get the video list before calling any API path 
+		because it would be too long to generate it each time with filters/text (approx 20/30s to wait depending on the videogenfile) */
+		String allVideos = new Gson().toJson(g.getAllVideoGenVideos()) ;
+		
 		get("/video/all", (request, response) -> {
 			HttpServletResponse resp = response.raw();
 			resp.setContentType("application/json");
-			return new Gson().toJson(g.getAllVideoGenVideos()) ;
+			return allVideos;
 		});
 		get("/video/generate", (request, response) -> {
-		    //genère et stream la vidéo
+		    //genère la video
+			g.generatePlaylistFile(g.generateFFmpegPlaylistString(g.generateVariation()), "txt");
 			g.generateFFmpegVideo();
+			return 200;
+		});
+		get("/video", (request, response) -> {
+			//stream la vidéo
 			Path p = Paths.get(g.getGeneratedVideoPath());
 			byte[] video = Files.readAllBytes(p);
 			response.status(200);
@@ -37,17 +45,16 @@ public class App
 			return 200;
 		});
 		get("/gif", (request, response) -> {
-			g.generateFFmpegGif();
+			/*g.generateFFmpegGif();
 			Path p = Paths.get(g.getGeneratedGifPath());
 			byte[] gif = Files.readAllBytes(p);
 			response.status(200);
 			HttpServletResponse resp = response.raw();
 			resp.setContentType("image/gif");
 			resp.getOutputStream().write(gif);
-			resp.getOutputStream().close();
+			resp.getOutputStream().close();*/
 			return 200;
-		});
-        
+		});        
     }
 	
 	public static void allowCors() {
