@@ -1,6 +1,6 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "Video_Of_People_Walking.mp4" {
+	mandatory videoseq v1 "Video_Of_People_Walking.mkv" {
 	    filter b&w
 		text {
 			content "gens qui marchent"
@@ -9,7 +9,7 @@ VideoGen {
 			size '50'
 		}
 	}
-	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	optional videoseq v2 "Pexels_Videos_5103.mkv"
 	{
 	    filter negate
 		text {
@@ -20,7 +20,7 @@ VideoGen {
 		}
 	}
 	alternatives v3 {
-		videoseq v31 "Blurred_Bokeh_Video.mp4"{
+		videoseq v31 "Blurred_Bokeh_Video.mkv"{
 			text {
 				content "rouge"
 				position TOP
@@ -28,7 +28,7 @@ VideoGen {
 				size '80'
 			}
 		}
-		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"{
+		videoseq v32 "Bokeh_Video_Of_Leaves.mkv"{
 			text {
 				content "petit"
 				position TOP
@@ -37,7 +37,7 @@ VideoGen {
 			}
 		}
 	}
-	mandatory videoseq v4 "Hamster_Eating.mp4"{
+	mandatory videoseq v4 "Hamster_Eating.mkv"{
 	        filter flip h
 			text {
 				content "HAMTARO PUTAIN !!!!"
