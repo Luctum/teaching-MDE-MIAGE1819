@@ -12,12 +12,12 @@ let router = new Router({
   routes: [
     {
       path: "/generate",
-      name: "Generer votre video",
+      name: "generer",
       component: VideoGen
     },
     {
       path: "/result",
-      name: "Resultat",
+      name: "resultat",
       component: Result
     }
   ]

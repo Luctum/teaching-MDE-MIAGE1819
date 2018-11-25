@@ -1,18 +1,20 @@
 <script>
-import Video from "../components/Video";
 import Base64Img from "../components/Base64Img";
 export default {
   name: "VideoList",
   components: {
-    Video,
     Base64Img
   },
   props: {
     video: null
-  }
+  },
+  data() {
+    return {
+      formData: [],
+    };
+  },
 };
 </script>
-
 
 <template>
   <div class="tile is-parent">
@@ -22,19 +24,21 @@ export default {
       <h3 class="tag is-dark" v-else>
         {{video.id}}
         <!-- Alternative video input -->
-        &nbsp;<input :name="video.parentId" value='video.id' type="radio" checked>
+        &nbsp;<input :name=video.parentId :value=video.location type="radio" checked>
       </h3>
       <!-- Optional video inputs -->
       <div class="control" v-if="video.type === 'optional'">
         <p>Inclure cette vidéo ?</p>
-        <label class="radio">Oui <input checked :name="video.id" :value="video.id" type="radio"></label>
-        <label class="radio">Non <input :name="video.id" value='' type="radio"></label>
+        <label class="radio">Oui <input :name=video.id :value=video.location type="radio" checked></label>
+        <label class="radio">Non <input :name=video.id value='' type="radio"></label>
       </div>
+       <!-- Mandatory hidden input -->
+      <input v-else-if="video.type==='mandatory'" :name=video.id :value=video.location type="radio" style="display:none" checked>
       <!-- Image -->
-      <Base64Img v-if="!video.videos" :image="video.image" />
+      <Base64Img v-if=!video.videos :image=video.image />
       <!-- Recursive subvideos-->
       <div class="tile" v-if="video.videos">
-        <VideoList v-for="subVideo in video.videos" :key="subVideo.id" :video="subVideo" />
+        <VideoList v-for="subVideo in video.videos" :key=subVideo.id :video="subVideo" />
       </div>
     </div>
   </div>

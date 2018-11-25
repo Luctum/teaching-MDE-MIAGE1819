@@ -19,8 +19,8 @@ export default {
 
 <template>
   <div>
-     <div class="result has-text-centered">
-        <h1 class="is-large">Vidéo Generée</h1>
+    <div class="result has-text-centered">
+      <h1 class="is-large">Vidéo Generée</h1>
     </div>
     <div class="columns">
       <div class="column">
@@ -29,10 +29,10 @@ export default {
           <div class="card">
               <div class="card-content">
                 <div class="media">
-                  <video controls src="http://localhost:4567/video/generate"></video>
+                  <video controls src="http://localhost:4567/video"></video>
                 </div>
                 <div class="media">
-                  <img src="http://localhost:4567/gif"/>
+                  <!-- <img src="http://localhost:4567/gif"/> -->
                 </div>
               </div>
           </div>

@@ -1,10 +1,12 @@
 package main.java.VideoGenToolSuite;
+
 import static spark.Spark.*;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +29,15 @@ public class App
 			resp.setContentType("application/json");
 			return allVideos;
 		});
-		get("/video/generate", (request, response) -> {
+		post("/video/generate", (request, response) -> {
 		    //genère la video
-			g.generatePlaylistFile(g.generateFFmpegPlaylistString(g.generateVariation()), "txt");
+			ArrayList<String> a = new Gson().fromJson(request.body(), ArrayList.class);
+			StringBuilder cleanString = new StringBuilder();
+			for(String s: a) {
+				cleanString.append("file '" + g.getVideoPath() + s + "'");
+				cleanString.append(System.getProperty("line.separator"));
+			}
+			g.generatePlaylistFile(cleanString.toString(), "txt");
 			g.generateFFmpegVideo();
 			return 200;
 		});
