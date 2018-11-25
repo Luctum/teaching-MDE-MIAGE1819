@@ -144,7 +144,6 @@ public class VideoGenerator {
 						location = this.addText(location, text);
 					}
 					Filter filter = description.getFilter();
-					System.out.println(filter.getClass());
 					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
 						location = this.negateFilter(location);	
 					}
