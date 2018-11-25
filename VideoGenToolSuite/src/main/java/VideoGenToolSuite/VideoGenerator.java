@@ -92,6 +92,21 @@ public class VideoGenerator {
 					if(text != null) {
 						location = this.addText(location, text);
 					}
+					Filter filter = description.getFilter();
+					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+						location = this.negateFilter(location);	
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+						location = this.blackAndWhiteFilter(location);
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+						if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+							location = this.horizontalFilter(location);
+						}
+						else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+							location = this.verticalFilter(location);
+						}
+					}
 					playlist.add(videoPath + location); 
 				} else if (vseq instanceof OptionalVideoSeq) {
 					int nombreAleatoire = rand.nextInt(2);
@@ -100,17 +115,49 @@ public class VideoGenerator {
 						String location = description.getLocation();
 						Text text = description.getText();
 						if(text != null) {
-							location = this.addText(location, text);
+							//location = this.addText(location, text);
+						}
+						Filter filter = description.getFilter();
+						if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+							location = this.negateFilter(location);	
+						}
+						else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+							location = this.blackAndWhiteFilter(location);
+						}
+						else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+							if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+								location = this.horizontalFilter(location);
+							}
+							else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+								location = this.verticalFilter(location);
+							}
 						}
 						playlist.add(videoPath + location);  
 					}
 				} else if (vseq instanceof AlternativeVideoSeq) {
 					EList<VideoDescription> videodesc= ((AlternativeVideoSeq) vseq).getVideodescs();
 					int nombreAleatoire = rand.nextInt(videodesc.size());
-					String location = videodesc.get(nombreAleatoire).getLocation();
+					VideoDescription description = videodesc.get(nombreAleatoire);
+					String location = description.getLocation();
 					Text text = videodesc.get(nombreAleatoire).getText();
 					if(text != null) {
 						location = this.addText(location, text);
+					}
+					Filter filter = description.getFilter();
+					System.out.println(filter.getClass());
+					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
+						location = this.negateFilter(location);	
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.BlackWhiteFilterImpl) {
+						location = this.blackAndWhiteFilter(location);
+					}
+					else if(filter instanceof org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) {
+						if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("h")) {
+							location = this.horizontalFilter(location);
+						}
+						else if(((org.xtext.example.mydsl.videoGen.impl.FlipFilterImpl) filter).getOrientation().equals("v")) {
+							location = this.verticalFilter(location);
+						}
 					}
 					playlist.add(videoPath + location);
 				}
@@ -306,6 +353,39 @@ public class VideoGenerator {
 			size = text.getSize();
 		}
 		String cmd = "ffmpeg -y -i " + Paths.get(input).toString() + " -vf \"drawtext=text='" + content + "':fontcolor=" + color + ":fontsize=" + size + ":x=(w-text_w)/2:y=" + position + "\" " + videoPath + Paths.get(output).toString() + "";
+		this.execCmd(cmd);
+		return(output);
+	}
+	
+
+	public String blackAndWhiteFilter(String path) {
+		String input = videoPath + path;
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf hue=s=0 -c:a copy " + videoPath + Paths.get(output).toString();
+		this.execCmd(cmd);
+		return(output);
+	}
+	
+	public String negateFilter(String path) {
+		String input = videoPath + path;
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf negate " + videoPath + Paths.get(output).toString();
+		this.execCmd(cmd);
+		return(output);
+	}
+	
+	public String horizontalFilter(String path) {
+		String input = videoPath + path;
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf hflip -c:a copy " + videoPath + Paths.get(output).toString();
+		this.execCmd(cmd);
+		return(output);
+	}
+	
+	public String verticalFilter(String path) {
+		String input = videoPath + path;
+		String output = path.substring(0, path.lastIndexOf('.')) +"Filtred.mp4";
+		String cmd = "ffmpeg -i " + Paths.get(input).toString() + " -vf vflip -c:a copy " + videoPath + Paths.get(output).toString();
 		this.execCmd(cmd);
 		return(output);
 	}
