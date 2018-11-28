@@ -165,9 +165,8 @@ public class VideoGenerator {
 		return(playlist);
 	}
 	
-	
-	private void generatePngImage(String location, String locationOut) {
-		this.execCmd("ffmpeg -y -i "+ location + " -vf scale=200x150 -r 1 -t 00:00:01 -ss 00:00:02  -f image2 " + locationOut + ".jpg");
+	private void generateJpgImage(String location, String locationOut) {
+		this.execCmd("ffmpeg -y -i \""+ Paths.get(location).toString() + "\" -vf scale=200x150 -r 1 -t 00:00:01 -ss 00:00:02  -f image2 \"" + Paths.get(locationOut).toString() + ".jpg\"");
 	}
 	
 	/**
@@ -208,7 +207,7 @@ public class VideoGenerator {
 					m.put("id", description.getVideoid());
 					m.put("type", "mandatory");
 					m.put("location", location);
-					this.generatePngImage(this.videoPath + location, this.videoPath + location);
+					this.generateJpgImage(this.videoPath + location, this.videoPath + location);
 					try {
 						File file = new File(this.videoPath + location + ".jpg");
 						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
@@ -223,7 +222,7 @@ public class VideoGenerator {
 					String location = description.getLocation();
 					Text text = description.getText();
 					if(text != null) {
-						//location = this.addText(location, text);
+						location = this.addText(location, text);
 					}
 					Filter filter = description.getFilter();
 					if(filter instanceof org.xtext.example.mydsl.videoGen.impl.NegateFilterImpl) {
@@ -244,7 +243,7 @@ public class VideoGenerator {
 					m.put("id", description.getVideoid());
 					m.put("type", "optional");
 					m.put("location", location);
-					this.generatePngImage(this.videoPath + location, this.videoPath + location);
+					this.generateJpgImage(this.videoPath + location, this.videoPath + location);
 					try {
 						File file =new File(this.videoPath + location + ".jpg");
 						m.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
@@ -281,7 +280,7 @@ public class VideoGenerator {
 						video.put("id", v.getVideoid());
 						video.put("location", location);
 						video.put("parentId", ((AlternativeVideoSeq) vseq).getVideoid());
-						this.generatePngImage(this.videoPath + location, this.videoPath + location);
+						this.generateJpgImage(this.videoPath + location, this.videoPath + location);
 						try {
 							File file =new File(this.videoPath + location+ ".jpg");
 							video.put("image", Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
@@ -412,7 +411,7 @@ public class VideoGenerator {
 		if(text.getSize() != null) {
 			size = text.getSize();
 		}
-		String cmd = "ffmpeg -y -i " + Paths.get(input).toString() + " -vf \"drawtext=text='" + content + "':fontcolor=" + color + ":fontsize=" + size + ":x=(w-text_w)/2:y=" + position + "\" " + videoPath + Paths.get(output).toString() + "";
+		String cmd = "ffmpeg -y -i \"" + Paths.get(input).toString() + "\" -vf \"drawtext=text='" + content + "':fontcolor=" + color + ":fontsize=" + size + ":x=(w-text_w)/2:y=" + position + "\" \"" + videoPath + Paths.get(output).toString() + "\"";
 		this.execCmd(cmd);
 		return(output);
 	}

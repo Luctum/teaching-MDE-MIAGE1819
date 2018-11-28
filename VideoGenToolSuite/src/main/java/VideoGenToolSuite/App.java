@@ -53,14 +53,6 @@ public class App
 			return 200;
 		});
 		get("/gif", (request, response) -> {
-			/*g.generateFFmpegGif();
-			Path p = Paths.get(g.getGeneratedGifPath());
-			byte[] gif = Files.readAllBytes(p);
-			response.status(200);
-			HttpServletResponse resp = response.raw();
-			resp.setContentType("image/gif");
-			resp.getOutputStream().write(gif);
-			resp.getOutputStream().close();*/
 			return 200;
 		});        
     }
