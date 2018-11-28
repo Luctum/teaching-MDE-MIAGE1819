@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +55,8 @@ public class App
 		});
 		get("/gif", (request, response) -> {
 			g.generateFFmpegGif();
-			return 200;
+			File file =new File(g.getGeneratedGifPath());
+			return new Gson().toJson(Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
 		});        
     }
 	
