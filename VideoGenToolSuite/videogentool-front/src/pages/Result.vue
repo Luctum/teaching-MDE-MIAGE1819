@@ -1,17 +1,21 @@
 <script>
 import axios from "axios";
-import Vue from 'vue'
 
 export default {
   name: "Result",
-  props: {
+  data () {
+    return {
+      waiting: false
+    }
   },
   methods: {
     "generateGif": function(){
+      this.waiting = true;
       axios({method: 'GET', url: 'http://localhost:4567/gif', responseType:'image/gif'}).then((response) => {
         console.log("ok");
-        return response.data;
-      })
+        this.waiting = false;
+        return response;
+      });
     }
   }
 };
@@ -32,7 +36,10 @@ export default {
                   <video controls src="http://localhost:4567/video"></video>
                 </div>
                 <div class="media">
+                  <h3 v-if=waiting >Veuillez patienter pendant la génération du gif</h3>
                   <!-- <img src="http://localhost:4567/gif"/> -->
+                  <button @click=generateGif class="button is-primary">Genere un gif</button>
+                  <router-link to="/generate"><button class="button">Retour</button></router-link>
                 </div>
               </div>
           </div>

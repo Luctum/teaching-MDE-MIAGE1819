@@ -53,6 +53,7 @@ public class App
 			return 200;
 		});
 		get("/gif", (request, response) -> {
+			g.generateFFmpegGif();
 			return 200;
 		});        
     }
