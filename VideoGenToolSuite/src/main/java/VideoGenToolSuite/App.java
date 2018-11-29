@@ -42,6 +42,12 @@ public class App
 			g.generateFFmpegVideo();
 			return 200;
 		});
+		get("/video/generate/random", (request, response) -> {
+		    //genère la video aléatoire
+			g.generatePlaylistFile(g.generateFFmpegPlaylistString(g.generateVariation()), "txt");
+			g.generateFFmpegVideo();
+			return 200;
+		});
 		get("/video", (request, response) -> {
 			//stream la vidéo
 			Path p = Paths.get(g.getGeneratedVideoPath());
@@ -57,7 +63,7 @@ public class App
 			g.generateFFmpegGif();
 			File file =new File(g.getGeneratedGifPath());
 			return new Gson().toJson(Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath())));
-		});        
+		});
     }
 	
 	public static void allowCors() {
