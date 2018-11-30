@@ -1,4 +1,4 @@
-# Projet Générateur de vidéo 
+# Projet Générateur de vidéo
 Projet ayant pour objectif la création d'un générateur de vidéo aléatoire utilisant des fichiers de spécification .videogen
 Les technologies utilisées pour la partie web sont le framework java Spark pour le backend et Vue.js pour le frontend
 
@@ -7,22 +7,22 @@ Les technologies utilisées pour la partie web sont le framework java Spark pour
 ## Prérequis 
 
 * Eclipse d'installé avec les bibliothèques XTEXT disponible ( https://www.eclipse.org/Xtext/download.html )
-* ffmpeg télécharger et ajouté au Path
+* ffmpeg téléchargé et ajouté au Path
 * node js installé et npm ajouté au Path
 
 ## Installation
 
 * Importez le projet sur eclipse
 * Compilez la grammaire Xtext ( clique droit sur le fichier *org.xtext.example.videogen/src/org/xtext/example/mydsl/VideoGen.xtext* > run as > Generate Xtext Artifacts )
-* Supprimez le projet VideoGenToolSuite et réimporter le en tant que projet maven
-* Dans *VideoGenToolSuite/videogentool-front* exécuter la commande **npm install**
-* Ajoutez à la racine du projet VideoGenToolSuite un fichier *conf* et ajouté le chemin vers votre répertoire contenant les vidéos. ( attention de ne pas oublier les caractères d'échapement sur windows)
+* Supprimez le projet VideoGenToolSuite et réimportez le en tant que **projet maven** afin d'obtenir les dépendances
+* Dans *VideoGenToolSuite/videogentool-front* exécutez la commande **npm install** pour obtenir les librairies javascript
+* Ajoutez à la racine du projet VideoGenToolSuite un fichier appellé *conf* et ajoutez tel quel le chemin vers votre répertoire contenant les vidéos. ( attention de ne pas oublier les caractères d'échappement sur Windows)
 
 ## Utilisation
 
 * Exécutez la commande **npm run serve**
 * Lancez le serveur *VideoGenToolSuite/src/main/java/VideoGenToolSuite/App.java*
-* Rendez-vous sur **http://localhost:8080/#/**
+* Rendez-vous sur **http://localhost:8080/#/** pour avoir accès à l'interface ( ne pas oublier le **#** )
 
 Le .videogen utilisé peut être changé dans *App.java* lors de l'instantiation de la classe VideoGenerator 
 
