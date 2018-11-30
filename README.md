@@ -1,3 +1,5 @@
+M2MIAGE - IDM - Réalisé par Hugo PALLA et Romain BOITARD
+
 # Projet Générateur de vidéo
 Projet ayant pour objectif la création d'un générateur de vidéo aléatoire utilisant des fichiers de spécification .videogen
 Les technologies utilisées pour la partie web sont le framework java Spark pour le backend et Vue.js pour le frontend
