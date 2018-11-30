@@ -1,3 +1,7 @@
+# Projet Générateur de vidéo 
+Projet ayant pour objectif la création d'un générateur de vidéo aléatoire utilisant des fichiers de spécification .videogen
+Les technologies utilisées pour la partie web sont le framework java Spark pour le backend et Vue.js pour le frontend
+
 # Installation du projet
 
 ## Prérequis 
@@ -19,6 +23,8 @@
 * Exécutez la commande **npm run serve**
 * Lancez le serveur *VideoGenToolSuite/src/main/java/VideoGenToolSuite/App.java*
 * Rendez-vous sur **http://localhost:8080/#/**
+
+Le .videogen utilisé peut être changé dans *App.java* lors de l'instantiation de la classe VideoGenerator 
 
 # Teaching resources for MDE (aka IDM) course at University of Rennes 1 (MIAGE)
 
