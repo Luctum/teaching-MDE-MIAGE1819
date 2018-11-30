@@ -35,7 +35,6 @@ public class VideoGenTestJava2 {
 		
 		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
 		assertNotNull(videoGen);		
-		System.out.println(videoGen.getInformation().getAuthorName());		
 		assertEquals(4, videoGen.getMedias().size());
 		Random rand = new Random();
 		String playlist = "";
@@ -73,7 +72,6 @@ public class VideoGenTestJava2 {
 						ArrayList<Object> list = new ArrayList();
 						list.add(j);
 						tmp.add(list);
-						System.out.println(list);
 					}					
 				}
 				else {
@@ -125,12 +123,16 @@ public class VideoGenTestJava2 {
 		builderCSV.append("taille");
 		builderCSV.append("\n");
 		
+		System.out.println(t.toString());
+		System.out.println(videoList.toString());
+		
 		int cpt = 1;
 		for (ArrayList i: t) {
 			builderCSV.append(cpt + ",");
 			int taille = 0;
 			for(VideoDescription video: videoList) {
-					if(i.contains(video)) {
+					if(i.contains(video.getVideoid()) || i.contains(video)) {
+						//if(video.get)
 						taille += this.getFileSize(video_path + video.getLocation());
 						builderCSV.append("TRUE,");
 					} else {
