@@ -1,43 +1,25 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "debut.mkv" {
-	    filter b&w
-		text {
-			content "CA SWAG DUR ICI"
-			position CENTER
-			color "black"
-			size '200'
-		}
-	}
-	optional videoseq v2 "fin.mkv"
-	{
-	    filter negate
-		text {
-			content "COUCOU !"
-			position CENTER
-			color "yellow"
-			size '100'
-		}
-	}
+	mandatory videoseq v4 "reponse_willem_rotgen.mkv"
 	alternatives v3 {
 		videoseq v31 "reponse_reaction_timesquare.mkv"{
 			text {
 				content "rouge"
 				position TOP
 				color "red"
-				size '80'
-			}
-		}
-		videoseq v32 "reponse_zanzibar.mkv"{
-			filter hflip
-			text {
-				content "SWAG"
-				position TOP
-				color "white"
-				size '300'
+				size '20'
 			}
 		}
 		videoseq v33 "reponse_moncul.mkv"
 	}
-	mandatory videoseq v4 "reponse_willem_rotgen.mkv"
+	
+	mandatory videoseq v1 "generique.mkv" {
+	    filter negate
+		text {
+			content "test"
+			position CENTER
+			color "black"
+			size '50'
+		}
+	}
 }

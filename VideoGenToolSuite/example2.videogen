@@ -1,11 +1,13 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "debut.mkv"
-	optional videoseq v2 "question_queueoiseaux.mkv"
+	mandatory videoseq v1 "generique.mkv"
+	optional videoseq v2 "fin.mkv"
 	alternatives v3 {
-		videoseq v31 "reaction_wouhouhou.mkv"
-		videoseq v32 "reponse_amandier.mkv"
+		videoseq v31 "generique.mkv"
+		videoseq v32 "generique.mkv"
+		videoseq v33 "fin.mkv"
+		videoseq v34 "question_parrain.mkv"
 	}
-	mandatory videoseq v5 "reponse_reaction_jesaispas.mkv"
+	mandatory videoseq v5 "fin.mkv"
 	mandatory videoseq v6 "fin.mkv"
 }

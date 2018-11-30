@@ -337,7 +337,7 @@ public class VideoGenerator {
 	 */
 	public void playPlaylistWithVlc() throws FileNotFoundException, UnsupportedEncodingException {
 		//TODO rewrite that to work with linux/macOS
-		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \"..\\..\\videos\\playlist.m3u\"";
+		String cmd = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\" \""+ Paths.get(videoPath + "playlist.m3u").toString() +"\"";
 		this.execCmd(cmd);
 	}
 	

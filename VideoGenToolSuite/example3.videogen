@@ -1,16 +1,16 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "debut.mkv"
+	mandatory videoseq v1 "generique.mkv"
 	optional videoseq v2 "fin.mkv"
 	alternatives v3 {
-		videoseq v31 "debut.mkv"
-		videoseq v32 "Hamster Eating.mkv"
+		videoseq v31 "generique.mkv"
+		videoseq v32 "generique.mkv"
 		videoseq v33 "fin.mkv"
 		videoseq v34 "question_parrain.mkv"
 	}
 	alternatives v4 {
-		videoseq v41 "debut.mkv"
-		videoseq v42 "Hamster Eating.mkv"
+		videoseq v41 "generique.mkv"
+		videoseq v42 "generique.mkv"
 		videoseq v43 "fin.mkv"
 		videoseq v44 "question_parrain.mkv"
 	}

@@ -33,9 +33,9 @@ public class VideoGenTestJava2 {
 	@Test
 	public void testInJava1() throws FileNotFoundException, UnsupportedEncodingException {
 		
-		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example1.videogen"));
+		VideoGeneratorModel videoGen = new VideoGenHelper().loadVideoGenerator(URI.createURI("example2.videogen"));
 		assertNotNull(videoGen);		
-		assertEquals(4, videoGen.getMedias().size());
+		assertEquals(5, videoGen.getMedias().size());
 		Random rand = new Random();
 		String playlist = "";
 		EList<Media> medias = videoGen.getMedias();
@@ -132,7 +132,6 @@ public class VideoGenTestJava2 {
 			int taille = 0;
 			for(VideoDescription video: videoList) {
 					if(i.contains(video.getVideoid()) || i.contains(video)) {
-						//if(video.get)
 						taille += this.getFileSize(video_path + video.getLocation());
 						builderCSV.append("TRUE,");
 					} else {
