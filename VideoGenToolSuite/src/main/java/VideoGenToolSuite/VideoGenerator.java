@@ -166,7 +166,7 @@ public class VideoGenerator {
 	}
 	
 	private void generateJpgImage(String location, String locationOut) {
-		this.execCmd("ffmpeg -y -i \""+ Paths.get(location).toString() + "\" -vf scale=200x150 -r 1 -t 00:00:01 -ss 00:00:02  -f image2 \"" + Paths.get(locationOut).toString() + ".jpg\"");
+		this.execCmd("ffmpeg -y -i \""+ Paths.get(location).toString() + "\" -vf scale=200x150 -r 1 -ss 00:00:00.435 -vframes 1 -f image2 \"" + Paths.get(locationOut).toString() + ".jpg\"");
 	}
 	
 	/**

@@ -1,0 +1,34 @@
+@author "MIAGE 2 students Romain Boitard / Hugo Palla"
+VideoGen {
+	mandatory videoseq v1_intro "generique.mkv"
+	mandatory videoseq v2_question "question_fruitacoque.mkv"
+	alternatives v3_reponse {
+		videoseq v3_1_timesquare "reponse_reaction_timesquare.mkv"
+		videoseq v3_2_je_sais_pas "reponse_reaction_jesaispas.mkv"
+	}
+	mandatory videoseq v4_question "question_parrain.mkv"
+	alternatives v5_reponse {
+		videoseq v5_1_la_mer_noire "reponse_mernoire.mkv"
+		videoseq v5_2_willem "reponse_willem_rotgen.mkv"
+		videoseq v5_3_mon_cul "reponse_moncul.mkv"
+	}
+	alternatives v6_reaction {
+		videoseq v6_1_une_autre_pour_la_route "reaction_autrepourlaroute.mkv"
+		videoseq v6_2_explication "reaction_suite_riencompris.mkv"
+		videoseq v6_3_ouais_ouais_ouais "reaction_ahouais.mkv"
+	}
+	mandatory videoseq v7_question "question_queueoiseaux.mkv"
+	alternatives v8_reponse {
+		videoseq v8_1_zanzibar "reponse_zanzibar.mkv"
+		videoseq v8_2_amandier "reponse_amandier.mkv"
+		videoseq v8_3_la_mer_noire "reponse_mernoire.mkv"
+		videoseq v8_4_mon_cul "reponse_moncul.mkv"
+	}
+	alternatives v9_reaction {
+		videoseq v9_1_ouais_ouais_ouais "reaction_ahouais.mkv"
+		videoseq v9_2_oh_oh "reaction_OHOH.mkv"
+	}
+	optional videoseq v12_felicitation "reaction_wouhouhou.mkv"
+	mandatory videoseq v13_outro "fin.mkv"
+	
+}

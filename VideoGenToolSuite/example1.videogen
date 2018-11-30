@@ -1,6 +1,6 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "meme_wow.mkv" {
+	mandatory videoseq v1 "debut.mkv" {
 	    filter b&w
 		text {
 			content "CA SWAG DUR ICI"
@@ -9,7 +9,7 @@ VideoGen {
 			size '200'
 		}
 	}
-	optional videoseq v2 "Pexels_Videos_5103.mkv"
+	optional videoseq v2 "fin.mkv"
 	{
 	    filter negate
 		text {
@@ -20,7 +20,7 @@ VideoGen {
 		}
 	}
 	alternatives v3 {
-		videoseq v31 "Blurred_Bokeh_Video.mkv"{
+		videoseq v31 "reponse_reaction_timesquare.mkv"{
 			text {
 				content "rouge"
 				position TOP
@@ -28,7 +28,7 @@ VideoGen {
 				size '80'
 			}
 		}
-		videoseq v32 "Bokeh_Video_Of_Leaves.mkv"{
+		videoseq v32 "reponse_zanzibar.mkv"{
 			filter hflip
 			text {
 				content "SWAG"
@@ -37,7 +37,7 @@ VideoGen {
 				size '300'
 			}
 		}
-		videoseq v33 "Pexels_Videos_5103.mkv"
+		videoseq v33 "reponse_moncul.mkv"
 	}
-	mandatory videoseq v4 "Hamster_Eating.mkv"
+	mandatory videoseq v4 "reponse_willem_rotgen.mkv"
 }

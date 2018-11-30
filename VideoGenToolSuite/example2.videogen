@@ -1,12 +1,11 @@
 @author "MIAGE 2 students"
 VideoGen {
-	mandatory videoseq v1 "Video_Of_People_Walking.mp4"
-	optional videoseq v2 "Pexels_Videos_5103.mp4"
+	mandatory videoseq v1 "debut.mkv"
+	optional videoseq v2 "question_queueoiseaux.mkv"
 	alternatives v3 {
-		videoseq v31 "Blurred_Bokeh_Video.mp4"
-		videoseq v32 "Bokeh_Video_Of_Leaves.mp4"
+		videoseq v31 "reaction_wouhouhou.mkv"
+		videoseq v32 "reponse_amandier.mkv"
 	}
-	mandatory videoseq v4 "Video_Of_People_Walking.mp4"
-	mandatory videoseq v5 "Hamster Eating.mp4"
-	mandatory videoseq v6 "Blurred_Bokeh_Video.mp4"
+	mandatory videoseq v5 "reponse_reaction_jesaispas.mkv"
+	mandatory videoseq v6 "fin.mkv"
 }

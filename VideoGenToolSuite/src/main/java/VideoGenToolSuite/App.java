@@ -19,7 +19,7 @@ public class App
 	
 	public static void main(String[] args) {
 		allowCors();
-		VideoGenerator g = new VideoGenerator("example1.videogen");
+		VideoGenerator g = new VideoGenerator("questionchampion.videogen");
 		
 		/*Get the video list before calling any API path 
 		because it would be too long to generate it each time with filters/text (approx 20/30s to wait depending on the videogenfile) */
