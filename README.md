@@ -1,3 +1,25 @@
+# Installation du projet
+
+## Prérequis 
+
+* Eclipse d'installé avec les bibliothèques XTEXT disponible ( https://www.eclipse.org/Xtext/download.html )
+* ffmpeg télécharger et ajouté au Path
+* node js installé et npm ajouté au Path
+
+## Installation
+
+* Importez le projet sur eclipse
+* Compilez la grammaire Xtext ( clique droit sur le fichier *org.xtext.example.videogen/src/org/xtext/example/mydsl/VideoGen.xtext* > run as > Generate Xtext Artifacts )
+* Supprimez le projet VideoGenToolSuite et réimporter le en tant que projet maven
+* Dans *VideoGenToolSuite/videogentool-front* exécuter la commande **npm install**
+* Ajoutez à la racine du projet VideoGenToolSuite un fichier *conf* et ajouté le chemin vers votre répertoire contenant les vidéos. ( attention de ne pas oublier les caractères d'échapement sur windows)
+
+## Utilisation
+
+* Exécutez la commande **npm run serve**
+* Lancez le serveur *VideoGenToolSuite/src/main/java/VideoGenToolSuite/App.java*
+* Rendez-vous sur **http://localhost:8080/#/**
+
 # Teaching resources for MDE (aka IDM) course at University of Rennes 1 (MIAGE)
 
 ## Short description
