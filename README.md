@@ -11,6 +11,7 @@ Les technologies utilisées pour la partie web sont le framework java Spark pour
 * Eclipse d'installé avec les bibliothèques XTEXT disponible ( https://www.eclipse.org/Xtext/download.html )
 * ffmpeg téléchargé et ajouté au Path
 * node js installé et npm ajouté au Path
+* Videos pour utiliser les fichiers videogen fournis : https://drive.google.com/file/d/1wnl2pkPRmu8YE3UcKPIEDt3zy8pfo8rs/view?usp=sharing
 
 ## Installation
 
